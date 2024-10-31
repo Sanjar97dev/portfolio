@@ -1,21 +1,16 @@
-import React from 'react'
-import Main from './components/Main'
-import Hero from './components/Hero'
-import Project from './components/Project'
-import Testimonial from './components/Testimonial'
-import Footer from './components/Footer'
+import Footer from './components/Footer';
+import Main from './components/Main';
+import Routes from './routers/Routers'; // Adjusted to match the file name
 
 
 const App = () => {
   return (
-    <div className=' bg-indigo-600'>
-      <Main/>
-      <Hero/>
-      <Project/>
-      <Testimonial/>
-      <Footer/>
+    <div className="bg-indigo-600">
+      <Main />
+      <Routes />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

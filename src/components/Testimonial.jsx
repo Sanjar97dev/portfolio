@@ -2,7 +2,7 @@ import React from "react";
 
 const Testimonial = () => {
   return (
-    <div className="flex bg-indigo-800 m-5 ssm:flex-col lg:flex-row">
+    <div className="flex bg-indigo-800 m-5  md:m-20 ssm:flex-col lg:flex-row">
       <div className="realtive rounded-xl overflow-auto p-8 hover:animate-pulse">
       <div className="overflow-hidden relative max-w-md mx-auto bg-white shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 dark:highlight-white/5">
           <img
