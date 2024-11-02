@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CgNametag } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase/firebase.js"; // Import your firebase auth
+import { onAuthStateChanged } from "firebase/auth";
 
 const Nav = () => {
   const [toggle, setToggle] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); // Set user state based on authentication
+    });
+
+    return () => unsubscribe(); // Clean up subscription on unmount
+  }, []);
 
   function openMenu() {
     setToggle(true);
@@ -48,6 +59,21 @@ const Nav = () => {
             >
               Күбөлүктөр
             </Link>
+            {user ? ( // If user is logged in, show Profile link
+              <Link
+                to="/profile"
+                className="text-white hover:bg-indigo-800 rounded-full px-5 py-2 text-xl"
+              >
+                Профиль
+              </Link>
+            ) : (
+              <Link
+                to="/register"
+                className="text-white hover:bg-indigo-800 rounded-full px-5 py-2 text-xl"
+              >
+                Каттоо
+              </Link>
+            )}
           </div>
           <div className="ssm:block lg:hidden">
             {toggle ? (
@@ -65,12 +91,21 @@ const Nav = () => {
             <Link to="/skills" className="text-white text-xl mb-2 cursor-pointer">
               Көндүмдөр
             </Link>
-            <Link to="/projects" className="text-white text-xl mb-2 cursor-pointer">
+            <Link to="/project" className="text-white text-xl mb-2 cursor-pointer">
               Долбоорлор
             </Link>
             <Link to="/testimonial" className="text-white text-xl mb-2 cursor-pointer">
               Күбөлүктөр
             </Link>
+            {user ? (
+              <Link to="/profile" className="text-white text-xl mb-2 cursor-pointer">
+                Профиль
+              </Link>
+            ) : (
+              <Link to="/register" className="text-white text-xl mb-2 cursor-pointer">
+                Каттоо
+              </Link>
+            )}
           </div>
         )}
       </div>
