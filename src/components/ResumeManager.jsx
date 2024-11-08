@@ -155,35 +155,33 @@ const ResumeManager = () => {
       </div>
 
       {/* Experience List */}
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4">Experience List</h2>
-        <ul className="space-y-4">
-          {experience.map((item) => (
-            <li key={item.id} className="border-b pb-4">
-              <h3 className="font-bold text-lg">
-                {item.company} - {item.position}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {item.startDate} to {item.endDate}
-              </p>
-              <p className="text-gray-800">{item.description}</p>
-              {item.img && (
-                <img
-                  src={item.img}
-                  alt="Experience"
-                  className="w-16 h-16 mt-2 rounded-full"
-                />
-              )}
-              <button
-                onClick={() => deleteExperience(item.id)}
-                className="text-red-600 hover:text-red-800 mt-2"
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-md mx-auto mt-6">
+  <h2 className="text-2xl font-semibold text-center text-indigo-700 mb-6">Experience List</h2>
+  <ul className="space-y-6">
+    {experience.map((item) => (
+      <li key={item.id} className="bg-gradient-to-r from-indigo-50 via-indigo-100 to-indigo-200 p-4 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
+        {/* Image with hover effect */}
+        {item.img && (
+          <img
+            src={item.img}
+            alt="Experience"
+            className="w-20 h-20 mb-4 rounded-full mx-auto border-4 border-indigo-600 shadow-md"
+          />
+        )}
+        <h3 className="font-bold text-xl text-indigo-900">{item.company} - {item.position}</h3>
+        <p className="text-sm text-gray-600">{item.startDate} to {item.endDate}</p>
+        <p className="text-gray-800 mt-2">{item.description}</p>
+        <button
+          onClick={() => deleteExperience(item.id)}
+          className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none transition-colors"
+        >
+          Delete
+        </button>
+      </li>
+    ))}
+  </ul>
+</div>
+
     </div>
   );
 };
