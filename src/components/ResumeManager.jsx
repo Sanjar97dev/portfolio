@@ -149,14 +149,14 @@ const ResumeManager = () => {
             type="submit"
             className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700"
           >
-            Add Experience
+            Тажрыйба кошуу
           </button>
         </form>
       </div>
 
       {/* Experience List */}
       <div className="bg-white shadow-xl rounded-lg p-6 w-full max-w-md mx-auto mt-6">
-  <h2 className="text-2xl font-semibold text-center text-indigo-700 mb-6">Experience List</h2>
+  <h2 className="text-2xl font-semibold text-center text-indigo-700 mb-6">Тажрыйба тизмеси</h2>
   <ul className="space-y-6">
     {experience.map((item) => (
       <li key={item.id} className="bg-gradient-to-r from-indigo-50 via-indigo-100 to-indigo-200 p-4 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
