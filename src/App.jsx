@@ -9,8 +9,8 @@ const App = () => {
     <div className="bg-indigo-600">
       <Main />
       <Routes />
-      <Footer />
       <ResumeManager/>
+      <Footer />
     </div>
   );
 };
