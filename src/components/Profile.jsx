@@ -1,4 +1,3 @@
-// src/components/Profile.jsx
 import React, { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.js";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -17,18 +16,22 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (!auth.currentUser) {
-          throw new Error("User is not authenticated.");
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          setError("User is not authenticated.");
+          return;
         }
 
-        const userDocRef = doc(db, "users", auth.currentUser.uid);
+        const userDocRef = doc(db, "users", currentUser.uid);
         const userSnap = await getDoc(userDocRef);
-        
+
         if (userSnap.exists()) {
-          setUserData(userSnap.data());
-          if (userSnap.data().avatarURL) {
+          const userData = userSnap.data();
+          setUserData(userData);
+
+          if (userData.avatarURL) {
             const storage = getStorage();
-            const avatarRef = ref(storage, userSnap.data().avatarURL);
+            const avatarRef = ref(storage, userData.avatarURL);
             const url = await getDownloadURL(avatarRef);
             setAvatarURL(url);
           }
@@ -37,7 +40,7 @@ const Profile = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setError(error.message);
+        setError("Error fetching user data.");
       } finally {
         setLoading(false);
       }
@@ -52,13 +55,14 @@ const Profile = () => {
       navigate("/login");
     } catch (error) {
       console.error("Error signing out:", error);
+      setError("Error signing out.");
     }
   };
 
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
-        <div className="loader">Loading...</div> {/* Consider using a spinner or some animation */}
+        <div className="loader">Loading...</div>
       </div>
     );
   }

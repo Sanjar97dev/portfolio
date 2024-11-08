@@ -1,5 +1,6 @@
 import Footer from './components/Footer';
 import Main from './components/Main';
+import ResumeManager from './components/ResumeManager';
 import Routes from './routers/Routers'; // Adjusted to match the file name
 
 
@@ -9,6 +10,7 @@ const App = () => {
       <Main />
       <Routes />
       <Footer />
+      <ResumeManager/>
     </div>
   );
 };

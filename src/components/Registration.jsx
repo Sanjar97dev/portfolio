@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../firebase/firebase.js"; // Ensure you import Firestore if you plan to store data
+import { auth, db } from "../firebase/firebase.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { setDoc, doc } from "firebase/firestore"; // Import Firestore functions
+import { setDoc, doc } from "firebase/firestore";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(""); // State for the avatar
+  const [avatar, setAvatar] = useState(null); // State for the avatar file
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -21,25 +21,20 @@ const Registration = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Initialize Firestore and Storage
       const storage = getStorage();
-
-      // Upload avatar if selected
       let avatarURL = "";
+
       if (avatar) {
         const avatarRef = ref(storage, `avatars/${user.uid}/${avatar.name}`);
         await uploadBytes(avatarRef, avatar);
-        
-        // Get the download URL
         avatarURL = await getDownloadURL(avatarRef);
         console.log("Avatar URL:", avatarURL);
       }
 
-      // Store user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
-        displayName: user.displayName || "Не указано", // Default display name
-        avatarURL: avatarURL, // Store avatar URL if uploaded
+        displayName: user.displayName || "Не указано",
+        avatarURL: avatarURL,
         createdAt: new Date(),
       });
 
@@ -80,9 +75,9 @@ const Registration = () => {
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">Аватар</label>
             <input
-              type="text"
+              type="file"
               accept="image/*"
-              onChange={(e) => setAvatar(e.target.text)}
+              onChange={(e) => setAvatar(e.target.files[0])}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
